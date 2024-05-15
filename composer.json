@@ -1,4 +1,6 @@
 {
+    "name": "papoel/anomalix",
+    "description": "Anomalix est l'application de gestion des fiches d'écarts dématérialisées",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -84,6 +86,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "before-commit": [
+            "castor before-commit"
         ]
     },
     "conflict": {
@@ -96,6 +101,7 @@
         }
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "7.0.*",
         "symfony/css-selector": "7.0.*",
