@@ -104,7 +104,7 @@ function resetDb(): void
     // 2. Create database
     createDb();
     // 3. Verify if in folder src/Migrations contains files
-    $migrations = finder()->in('src/Migrations')->files();
+    $migrations = finder()->in(dirs: 'migrations')->files();
     if (count($migrations) > 0) {
         // 4. Migrate database
         migrate();

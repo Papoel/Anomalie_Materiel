@@ -48,6 +48,11 @@
 # Embedded web-server pid file
 /.web-server-pid
 
+###> IDE ###
+.idea
+.DS_Store
+###< IDE ###
+
 ###> Generate by GITHUB ###
 
 ###> symfony/framework-bundle ###
