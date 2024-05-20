@@ -1,10 +1,19 @@
+// Framework Bootstrap
+import 'bootstrap';
+import './vendor/bootstrap/dist/css/bootstrap.min.css';
+
+
+// Librairie Externe
+import './vendor/animate/animate.min.css';
+import './vendor/animate/animate.index.js';
+import  './vendor/fontawesome/css/all.min.css';
+import './vendor/bootstrap-icons/font/bootstrap-icons.min.css';
+
+// Stimulus
 import './bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
+
+// Mon CSS
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+// Custom Theme
+import './styles/scss/custom.css';

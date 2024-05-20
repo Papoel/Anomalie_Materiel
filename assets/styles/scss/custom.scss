@@ -1,0 +1,19 @@
+// custom.scss
+
+// Surcharge des variables de Bootstrap
+$primary: #ff6600;
+$secondary: #747d88;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+$blue: #007bff;
+
+// Changer la valeur de --bs-body-color-rgb
+$body-color: #747d88;
+
+
+// Importer Bootstrap
+@import "../../vendor/bootstrap/scss/bootstrap";

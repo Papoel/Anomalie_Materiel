@@ -49,8 +49,8 @@
 /.web-server-pid
 
 ###> IDE ###
-.idea
-.DS_Store
+/.idea/
+/.DS_Store
 ###< IDE ###
 
 ###> Generate by GITHUB ###
