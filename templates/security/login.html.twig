@@ -1,37 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+    <div class="container mt-5">
+        <form class="row justify-content-center" method="post">
+            <div class="col-md-6 col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h3 mb-3 fw-normal text-center">Connexion à Easy Constat</h1>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputNni">Nni</label>
-    <input type="text" value="{{ last_username }}" name="nni" id="inputNni" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="nni" id="inputNni" placeholder="NNI" value="{{ last_username }}" autofocus>
+                            <label for="inputNni">NNI</label>
+                        </div>
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Mot de passe">
+                            <label for="inputPassword">Mot de passe</label>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="d-grid gap 2">
+                            <button type="submit" class="btn btn-md btn-primary w-100">Se connecter</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
 {% endblock %}

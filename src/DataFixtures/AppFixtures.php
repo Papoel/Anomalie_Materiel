@@ -30,12 +30,12 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
 
         // Generate 150 users
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 25; $i++) {
             $user = new User();
             // Random NNI : start with letter between A and Z and 5 digits
             $user->setNni(nni: $faker->regexify(regex: '/[A-Z]\d{5}/'));
             $user->setFirstname(firstname: $faker->firstName());
-            $user->setLastname(lastname: '$faker->lastName()');
+            $user->setLastname(lastname: $faker->lastName());
             $user->setRoles(roles: ['ROLE_USER']);
             $hash = $this->passwordHasher->hashPassword(user: $user, plainPassword: 'user');
             $user->setPassword(password: $hash);
