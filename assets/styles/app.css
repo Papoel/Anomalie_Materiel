@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Fredoka';
+    font-family: 'Montserrat';
     src: url('../fonts/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype');
 }
 
@@ -120,7 +120,7 @@ body {
 
 .topbar .top-info {
     font-family: 'Montserrat', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
     display: flex;
@@ -215,9 +215,9 @@ body {
 }
 
 .dropdown .dropdown-menu a:hover {
-    color: #0D47A1;
+    color: #662900;
     /*background-color: #B3E5FC;*/ /* Bleu pastel */
-    background-color: #92d8ff;
+    background-color: #FFE0CC;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 

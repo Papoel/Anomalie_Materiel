@@ -1,4 +1,5 @@
-// custom.scss
+// Font Family
+$font-family-sans-serif: 'Hind', sans-serif;
 
 // Surcharge des variables de Bootstrap
 $primary: #ff6600;
@@ -11,9 +12,12 @@ $light: #f8f9fa;
 $dark: #212529;
 $blue: #007bff;
 
-// Changer la valeur de --bs-body-color-rgb
 $body-color: #747d88;
 
 
 // Importer Bootstrap
 @import "../../vendor/bootstrap/scss/bootstrap";
+
+// Importer les Fonts
+@import url('../../fonts/Hind/Hind-Medium.ttf');
+@import url('../../fonts/Montserrat/Montserrat-VariableFont_wght.ttf');

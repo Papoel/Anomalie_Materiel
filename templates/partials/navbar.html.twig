@@ -22,7 +22,16 @@
                 <div class="top-link flex-lg-wrap">
                     <i class="fa-solid fa-envelope text-white me-2"></i>
                     <span class="text-body">{{ 'now' | format_datetime(pattern="EEEE dd MMMM yyyy, HH:mm:ss") }}</span>
-                    <span class="badge bg-success rounded-pill ms-2 fw-light">S{{ 'now' | format_datetime(pattern="yyww") }}</span>
+
+                    {#<span class="badge bg-success rounded-pill ms-2 fw-light">S{{ 'now' | format_datetime(pattern="yyww") }}</span>#}
+                    <span class="ms-3 px-2 badge d-flex align-items-center p-1 pe-2 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill fw-normal">
+                        Semaine
+                        <span class="vr mx-2"></span>
+                        <span class="">{{ 'now' | format_datetime(pattern="yyww") }}</span>
+                    </span>
+
+
+
                 </div>
             </div>
         </div>
@@ -40,7 +49,6 @@
                 </button>
                 <div class="collapse navbar-collapse bg-light py-3" id="navbarCollapse">
                     <div class="navbar-nav mx-auto border-top">
-                        {# Mettre la classe active si la route est la même que celle du lien #}
                         <a href="{{ path('home_index') }}" class="nav-item nav-link {{ app.request.attributes.get('_route') == 'home_index' ? 'active' : 'text-danger' }}">
                             Accueil
                         </a>
