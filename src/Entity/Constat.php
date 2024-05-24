@@ -17,7 +17,7 @@ class Constat
     private ?int $id = null;
 
     #[ORM\Column(length: 12)]
-    private ?string $repere = null;
+    private ?string $system = null;
 
     #[ORM\Column(length: 2)]
     private ?string $order_number = null;
@@ -89,6 +89,9 @@ class Constat
     #[ORM\Column(length: 100)]
     private ?string $sn3 = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $cdt = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -101,14 +104,11 @@ class Constat
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $returnAt = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $cdt = null;
-
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $realisationAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $isSolded = null;
+    private ?bool $isSold = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isPending = null;
@@ -118,14 +118,14 @@ class Constat
         return $this->id;
     }
 
-    public function getRepere(): ?string
+    public function getSystem(): ?string
     {
-        return $this->repere;
+        return $this->system;
     }
 
-    public function setRepere(string $repere): static
+    public function setSystem(string $system): static
     {
-        $this->repere = $repere;
+        $this->system = $system;
 
         return $this;
     }
@@ -406,6 +406,18 @@ class Constat
         return $this;
     }
 
+    public function getCdt(): ?string
+    {
+        return $this->cdt;
+    }
+
+    public function setCdt(?string $cdt): static
+    {
+        $this->cdt = $cdt;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -454,18 +466,6 @@ class Constat
         return $this;
     }
 
-    public function getCdt(): ?string
-    {
-        return $this->cdt;
-    }
-
-    public function setCdt(?string $cdt): static
-    {
-        $this->cdt = $cdt;
-
-        return $this;
-    }
-
     public function getRealisationAt(): ?\DateTimeImmutable
     {
         return $this->realisationAt;
@@ -478,14 +478,14 @@ class Constat
         return $this;
     }
 
-    public function isSolded(): ?bool
+    public function isSold(): ?bool
     {
-        return $this->isSolded;
+        return $this->isSold;
     }
 
-    public function setSolded(?bool $isSolded): static
+    public function setSold(?bool $isSold): static
     {
-        $this->isSolded = $isSolded;
+        $this->isSold = $isSold;
 
         return $this;
     }
