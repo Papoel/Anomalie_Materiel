@@ -31,9 +31,16 @@ class OT
     #[ORM\OneToMany(targetEntity: TOT::class, mappedBy: 'oT', cascade: ['persist', 'remove'])]
     private Collection $tots;
 
+    /**
+     * @var Collection<int, Constat>
+     */
+    #[ORM\OneToMany(targetEntity: Constat::class, mappedBy: 'OT')]
+    private Collection $constats;
+
     public function __construct()
     {
         $this->tots = new ArrayCollection();
+        $this->constats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,6 +115,36 @@ class OT
         if ($this->tots->removeElement($tot)) {
             if ($tot->getOT() === $this) {
                 $tot->setOT(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Constat>
+     */
+    public function getConstats(): Collection
+    {
+        return $this->constats;
+    }
+
+    public function addConstat(Constat $constat): static
+    {
+        if (!$this->constats->contains($constat)) {
+            $this->constats->add($constat);
+            $constat->setOT($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConstat(Constat $constat): static
+    {
+        if ($this->constats->removeElement($constat)) {
+            // set the owning side to null (unless already changed)
+            if ($constat->getOT() === $this) {
+                $constat->setOT(null);
             }
         }
 
