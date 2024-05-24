@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AppFixtures extends Fixture
+class UsersFixtures extends Fixture
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
@@ -30,7 +30,7 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
 
         // Generate 150 users
-        for ($i = 1; $i <= 25; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $user = new User();
             // Random NNI : start with letter between A and Z and 5 digits
             $user->setNni(nni: $faker->regexify(regex: '/[A-Z]\d{5}/'));
