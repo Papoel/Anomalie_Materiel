@@ -11844,5 +11844,14 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.card-title {
+  font-family: "Hind", sans-serif;
+  font-weight: 400;
+}
+
+.card-text {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+}
 
 /*# sourceMappingURL=custom.css.map */
