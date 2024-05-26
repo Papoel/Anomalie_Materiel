@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: ConstatRepository::class)]
-#[Broadcast]
 class Constat
 {
     #[ORM\Id]
@@ -51,16 +50,13 @@ class Constat
     private ?string $solution_selected = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $transfer_method = null;
-
-    #[ORM\Column(nullable: true)]
     private ?bool $isValidate = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isDTorTOT = null;
 
     #[ORM\Column(length: 12, nullable: true)]
-    private ?string $DT_TOT = null;
+    private ?string $dt_tot = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isOpenPA = null;
@@ -112,6 +108,9 @@ class Constat
 
     #[ORM\Column(nullable: true)]
     private ?bool $isPending = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $IsTransferMethod = null;
 
     public function getId(): ?int
     {
@@ -250,18 +249,6 @@ class Constat
         return $this;
     }
 
-    public function isTransferMethod(): ?bool
-    {
-        return $this->transfer_method;
-    }
-
-    public function setTransferMethod(?bool $transfer_method): static
-    {
-        $this->transfer_method = $transfer_method;
-
-        return $this;
-    }
-
     public function isValidate(): ?bool
     {
         return $this->isValidate;
@@ -286,14 +273,14 @@ class Constat
         return $this;
     }
 
-    public function getDTTOT(): ?string
+    public function getDtTot(): ?string
     {
-        return $this->DT_TOT;
+        return $this->dt_tot;
     }
 
-    public function setDTTOT(?string $DT_TOT): static
+    public function setDtTot(?string $dt_tot): static
     {
-        $this->DT_TOT = $DT_TOT;
+        $this->dt_tot = $dt_tot;
 
         return $this;
     }
@@ -498,6 +485,18 @@ class Constat
     public function setPending(?bool $isPending): static
     {
         $this->isPending = $isPending;
+
+        return $this;
+    }
+
+    public function isTransferMethod(): ?bool
+    {
+        return $this->IsTransferMethod;
+    }
+
+    public function setTransferMethod(?bool $IsTransferMethod): static
+    {
+        $this->IsTransferMethod = $IsTransferMethod;
 
         return $this;
     }
