@@ -48,6 +48,17 @@ function checkServer(): void
     run(command: 'symfony server:status');
 }
 
+#[AsTask(description: 'staring server and open browser')]
+function simpleStart(): void
+{
+    serverStart();
+    parallel(
+        fn() => run(command: 'phpstorm .'),
+        fn() => run(command: 'symfony open:local')
+    );
+
+}
+
 /* ******************** 📜 DOCTRINE 📜 ******************** */
 #[AsTask(description: 'make entity')]
 function entity(): void
