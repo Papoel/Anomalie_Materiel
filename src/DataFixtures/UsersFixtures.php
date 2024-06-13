@@ -30,7 +30,7 @@ class UsersFixtures extends Fixture
 
         $manager->persist($admin);
 
-        // Generate 150 users
+        // Generate 5 users
         for ($i = 1; $i <= 5; $i++) {
             $user = new User();
             // Random NNI : start with letter between A and Z and 5 digits

@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\TOT;
+use App\Entity\WorkOrder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<TOT>
+ * @extends ServiceEntityRepository<WorkOrder>
  */
-class TOTRepository extends ServiceEntityRepository
+class OTRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TOT::class);
+        parent::__construct($registry, WorkOrder::class);
     }
 
     //    /**
-    //     * @return TOT[] Returns an array of TOT objects
+    //     * @return WorkOrder[] Returns an array of WorkOrder objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
+    //            ->orderBy('o.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?TOT
+    //    public function findOneBySomeField($value): ?WorkOrder
     //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()
