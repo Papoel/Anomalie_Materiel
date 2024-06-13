@@ -2,60 +2,62 @@
 
 namespace App\Entity;
 
-use App\Repository\OTRepository;
+use App\Entity\Traits\TimestampTrait;
+use App\Repository\WorkOrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UlidType;
+use Symfony\Component\Uid\Ulid;
 
-#[ORM\Entity(repositoryClass: OTRepository::class)]
-class OT
+#[ORM\Entity(repositoryClass: WorkOrderRepository::class)]
+#[ORM\Table(name: 'work_orders')]
+class WorkOrder
 {
+    use TimestampTrait;
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: UlidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
+    private ?Ulid $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 8)]
-    private ?string $number = null;
+    private ?string $order_number = null;
 
     #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     #[ORM\Column(type: Types::STRING, length: 6)]
-    private ?string $projet = null;
+    private ?string $project = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $instruction = null;
-
-    #[ORM\OneToMany(targetEntity: TOT::class, mappedBy: 'oT', cascade: ['persist', 'remove'])]
-    private Collection $tots;
+    #[ORM\Column(length: 255, nullable: true)] // TODO: Création ENUM work_order_state
+    private ?string $state = null;
 
     /**
-     * @var Collection<int, Constat>
+     * @var Collection<int, WorkTask>
      */
-    #[ORM\OneToMany(targetEntity: Constat::class, mappedBy: 'OT')]
-    private Collection $constats;
+    #[ORM\OneToMany(targetEntity: WorkTask::class, mappedBy: 'workOrder')]
+    private Collection $workTasks;
 
     public function __construct()
     {
-        $this->tots = new ArrayCollection();
-        $this->constats = new ArrayCollection();
+        $this->workTasks = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?Ulid
     {
         return $this->id;
     }
 
-    public function getNumber(): ?string
+    public function getOrderNumber(): ?string
     {
-        return $this->number;
+        return $this->order_number;
     }
 
-    public function setNumber(string $number): static
+    public function setOrderNumber(string $order_number): static
     {
-        $this->number = $number;
+        $this->order_number = $order_number;
         return $this;
     }
 
@@ -70,81 +72,53 @@ class OT
         return $this;
     }
 
-    public function getProjet(): ?string
+    public function getProject(): ?string
     {
-        return $this->projet;
+        return $this->project;
     }
 
-    public function setProjet(string $projet): static
+    public function setProject(string $project): static
     {
-        $this->projet = $projet;
+        $this->project = $project;
         return $this;
     }
 
-    public function getInstruction(): ?string
+    public function getState(): ?string
     {
-        return $this->instruction;
+        return $this->state;
     }
 
-    public function setInstruction(?string $instruction): static
+    public function setState(?string $state): static
     {
-        $this->instruction = $instruction;
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, TOT>
-     */
-    public function getTots(): Collection
-    {
-        return $this->tots;
-    }
-
-    public function addTot(TOT $tot): static
-    {
-        if (!$this->tots->contains($tot)) {
-            $this->tots->add($tot);
-            $tot->setOT($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTot(TOT $tot): static
-    {
-        if ($this->tots->removeElement($tot)) {
-            if ($tot->getOT() === $this) {
-                $tot->setOT(null);
-            }
-        }
+        $this->state = $state;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Constat>
+     * @return Collection<int, WorkTask>
      */
-    public function getConstats(): Collection
+    public function getWorkTasks(): Collection
     {
-        return $this->constats;
+        return $this->workTasks;
     }
 
-    public function addConstat(Constat $constat): static
+    public function addWorkTask(WorkTask $workTask): static
     {
-        if (!$this->constats->contains($constat)) {
-            $this->constats->add($constat);
-            $constat->setOT($this);
+        if (!$this->workTasks->contains($workTask)) {
+            $this->workTasks->add($workTask);
+            $workTask->setWorkOrder($this);
         }
 
         return $this;
     }
 
-    public function removeConstat(Constat $constat): static
+    public function removeWorkTask(WorkTask $workTask): static
     {
-        if ($this->constats->removeElement($constat)) {
+        if ($this->workTasks->removeElement($workTask)) {
             // set the owning side to null (unless already changed)
-            if ($constat->getOT() === $this) {
-                $constat->setOT(null);
+            if ($workTask->getWorkOrder() === $this) {
+                $workTask->setWorkOrder(null);
             }
         }
 

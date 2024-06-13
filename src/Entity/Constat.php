@@ -2,153 +2,138 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampTrait;
 use App\Repository\ConstatRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\UX\Turbo\Attribute\Broadcast;
+use Symfony\Bridge\Doctrine\Types\UlidType;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: ConstatRepository::class)]
+#[ORM\Table(name: 'constats')]
 class Constat
 {
+    use TimestampTrait;
+
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: UlidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
+    private ?Ulid $id = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $reference = null;
 
     #[ORM\Column(length: 12)]
-    private ?string $system = null;
+    private ?string $functional_marker = null;
 
-    #[ORM\Column(length: 2)]
-    private ?string $order_number = null;
-
-    #[ORM\ManyToOne(inversedBy: 'constats')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?OT $OT = null;
+    #[ORM\Column(length: 75)]
+    private ?string $equipment_label = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isQs = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $isEip = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $solutions = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $IsDsiChecked = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $analyse = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $impacts = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $solution_selected = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $isValidate = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $isDTorTOT = null;
-
-    #[ORM\Column(length: 12, nullable: true)]
-    private ?string $dt_tot = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $isOpenPA = null;
-
-    #[ORM\Column(length: 12, nullable: true)]
-    private ?string $PACSTA = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $observation = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $method_analyse = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $method_impact = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $method_solutions = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $writer = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $writer_edf = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $sn3 = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $cdt = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $proposed_solutions = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $detection_date = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $writer = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $edf_control_name = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $edf_control_date = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $analysis = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $potential_impacts = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $retained_solutions = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $sn3_name = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $sn3_date = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $transmissionAt = null;
+    private ?\DateTimeImmutable $transmission_date = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $returnAt = null;
+    private ?bool $is_transmitted_method = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $validation = null;
+
+    #[ORM\Column(length: 12, nullable: true)]
+    private ?string $dt_tot_number = null;
+
+    #[ORM\Column(length: 12, nullable: true)]
+    private ?string $pa_csta_number = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $validation_responsable = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $realisationAt = null;
+    private ?\DateTimeImmutable $validation_date = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $observations = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $implementation_responsable = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $isSold = null;
+    private ?\DateTimeImmutable $implementation_date = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isPending = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $method_analysis_confirmation = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $IsTransferMethod = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $method_impact_protection_interests = null;
 
-    public function getId(): ?int
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $method_retained_solutions = null;
+
+    public function getReference(): ?string
     {
-        return $this->id;
+        return $this->reference;
     }
 
-    public function getSystem(): ?string
+    public function setReference(?string $reference): static
     {
-        return $this->system;
-    }
-
-    public function setSystem(string $system): static
-    {
-        $this->system = $system;
+        $this->reference = $reference;
 
         return $this;
     }
 
-    public function getOrderNumber(): ?string
+    public function getFunctionalMarker(): ?string
     {
-        return $this->order_number;
+        return $this->functional_marker;
     }
 
-    public function setOrderNumber(string $order_number): static
+    public function setFunctionalMarker(string $functional_marker): static
     {
-        $this->order_number = $order_number;
+        $this->functional_marker = $functional_marker;
 
         return $this;
     }
 
-    public function getOT(): ?OT
+    public function getEquipmentLabel(): ?string
     {
-        return $this->OT;
+        return $this->equipment_label;
     }
 
-    public function setOT(?OT $OT): static
+    public function setEquipmentLabel(string $equipment_label): static
     {
-        $this->OT = $OT;
+        $this->equipment_label = $equipment_label;
 
         return $this;
     }
@@ -165,194 +150,26 @@ class Constat
         return $this;
     }
 
-    public function isQs(): ?bool
+    public function getProposedSolutions(): ?string
     {
-        return $this->isQs;
+        return $this->proposed_solutions;
     }
 
-    public function setQs(?bool $isQs): static
+    public function setProposedSolutions(string $proposed_solutions): static
     {
-        $this->isQs = $isQs;
+        $this->proposed_solutions = $proposed_solutions;
 
         return $this;
     }
 
-    public function isEip(): ?bool
+    public function getDetectionDate(): ?\DateTimeImmutable
     {
-        return $this->isEip;
+        return $this->detection_date;
     }
 
-    public function setEip(?bool $isEip): static
+    public function setDetectionDate(\DateTimeImmutable $detection_date): static
     {
-        $this->isEip = $isEip;
-
-        return $this;
-    }
-
-    public function getSolutions(): ?string
-    {
-        return $this->solutions;
-    }
-
-    public function setSolutions(?string $solutions): static
-    {
-        $this->solutions = $solutions;
-
-        return $this;
-    }
-
-    public function isDsiChecked(): ?bool
-    {
-        return $this->IsDsiChecked;
-    }
-
-    public function setDsiChecked(?bool $IsDsiChecked): static
-    {
-        $this->IsDsiChecked = $IsDsiChecked;
-
-        return $this;
-    }
-
-    public function getAnalyse(): ?string
-    {
-        return $this->analyse;
-    }
-
-    public function setAnalyse(?string $analyse): static
-    {
-        $this->analyse = $analyse;
-
-        return $this;
-    }
-
-    public function getImpacts(): ?string
-    {
-        return $this->impacts;
-    }
-
-    public function setImpacts(?string $impacts): static
-    {
-        $this->impacts = $impacts;
-
-        return $this;
-    }
-
-    public function getSolutionSelected(): ?string
-    {
-        return $this->solution_selected;
-    }
-
-    public function setSolutionSelected(?string $solution_selected): static
-    {
-        $this->solution_selected = $solution_selected;
-
-        return $this;
-    }
-
-    public function isValidate(): ?bool
-    {
-        return $this->isValidate;
-    }
-
-    public function setValidate(?bool $isValidate): static
-    {
-        $this->isValidate = $isValidate;
-
-        return $this;
-    }
-
-    public function isDTorTOT(): ?bool
-    {
-        return $this->isDTorTOT;
-    }
-
-    public function setDTorTOT(?bool $isDTorTOT): static
-    {
-        $this->isDTorTOT = $isDTorTOT;
-
-        return $this;
-    }
-
-    public function getDtTot(): ?string
-    {
-        return $this->dt_tot;
-    }
-
-    public function setDtTot(?string $dt_tot): static
-    {
-        $this->dt_tot = $dt_tot;
-
-        return $this;
-    }
-
-    public function isOpenPA(): ?bool
-    {
-        return $this->isOpenPA;
-    }
-
-    public function setOpenPA(?bool $isOpenPA): static
-    {
-        $this->isOpenPA = $isOpenPA;
-
-        return $this;
-    }
-
-    public function getPACSTA(): ?string
-    {
-        return $this->PACSTA;
-    }
-
-    public function setPACSTA(?string $PACSTA): static
-    {
-        $this->PACSTA = $PACSTA;
-
-        return $this;
-    }
-
-    public function getObservation(): ?string
-    {
-        return $this->observation;
-    }
-
-    public function setObservation(?string $observation): static
-    {
-        $this->observation = $observation;
-
-        return $this;
-    }
-
-    public function getMethodAnalyse(): ?string
-    {
-        return $this->method_analyse;
-    }
-
-    public function setMethodAnalyse(?string $method_analyse): static
-    {
-        $this->method_analyse = $method_analyse;
-
-        return $this;
-    }
-
-    public function getMethodImpact(): ?string
-    {
-        return $this->method_impact;
-    }
-
-    public function setMethodImpact(?string $method_impact): static
-    {
-        $this->method_impact = $method_impact;
-
-        return $this;
-    }
-
-    public function getMethodSolutions(): ?string
-    {
-        return $this->method_solutions;
-    }
-
-    public function setMethodSolutions(?string $method_solutions): static
-    {
-        $this->method_solutions = $method_solutions;
+        $this->detection_date = $detection_date;
 
         return $this;
     }
@@ -369,134 +186,242 @@ class Constat
         return $this;
     }
 
-    public function getWriterEdf(): ?string
+    public function getEdfControlName(): ?string
     {
-        return $this->writer_edf;
+        return $this->edf_control_name;
     }
 
-    public function setWriterEdf(?string $writer_edf): static
+    public function setEdfControlName(?string $edf_control_name): static
     {
-        $this->writer_edf = $writer_edf;
+        $this->edf_control_name = $edf_control_name;
 
         return $this;
     }
 
-    public function getSn3(): ?string
+    public function getEdfControlDate(): ?\DateTimeImmutable
     {
-        return $this->sn3;
+        return $this->edf_control_date;
     }
 
-    public function setSn3(string $sn3): static
+    public function setEdfControlDate(?\DateTimeImmutable $edf_control_date): static
     {
-        $this->sn3 = $sn3;
+        $this->edf_control_date = $edf_control_date;
 
         return $this;
     }
 
-    public function getCdt(): ?string
+    public function getAnalysis(): ?string
     {
-        return $this->cdt;
+        return $this->analysis;
     }
 
-    public function setCdt(?string $cdt): static
+    public function setAnalysis(string $analysis): static
     {
-        $this->cdt = $cdt;
+        $this->analysis = $analysis;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getPotentialImpacts(): ?string
     {
-        return $this->createdAt;
+        return $this->potential_impacts;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setPotentialImpacts(string $potential_impacts): static
     {
-        $this->createdAt = $createdAt;
+        $this->potential_impacts = $potential_impacts;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getRetainedSolutions(): ?string
     {
-        return $this->updatedAt;
+        return $this->retained_solutions;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setRetainedSolutions(?string $retained_solutions): static
     {
-        $this->updatedAt = $updatedAt;
+        $this->retained_solutions = $retained_solutions;
 
         return $this;
     }
 
-    public function getTransmissionAt(): ?\DateTimeImmutable
+    public function getSn3Name(): ?string
     {
-        return $this->transmissionAt;
+        return $this->sn3_name;
     }
 
-    public function setTransmissionAt(?\DateTimeImmutable $transmissionAt): static
+    public function setSn3Name(string $sn3_name): static
     {
-        $this->transmissionAt = $transmissionAt;
+        $this->sn3_name = $sn3_name;
 
         return $this;
     }
 
-    public function getReturnAt(): ?\DateTimeImmutable
+    public function getSn3Date(): ?\DateTimeImmutable
     {
-        return $this->returnAt;
+        return $this->sn3_date;
     }
 
-    public function setReturnAt(?\DateTimeImmutable $returnAt): static
+    public function setSn3Date(\DateTimeImmutable $sn3_date): static
     {
-        $this->returnAt = $returnAt;
+        $this->sn3_date = $sn3_date;
 
         return $this;
     }
 
-    public function getRealisationAt(): ?\DateTimeImmutable
+    public function getTransmissionDate(): ?\DateTimeImmutable
     {
-        return $this->realisationAt;
+        return $this->transmission_date;
     }
 
-    public function setRealisationAt(?\DateTimeImmutable $realisationAt): static
+    public function setTransmissionDate(?\DateTimeImmutable $transmission_date): static
     {
-        $this->realisationAt = $realisationAt;
+        $this->transmission_date = $transmission_date;
 
         return $this;
     }
 
-    public function isSold(): ?bool
+    public function isTransmittedMethod(): ?bool
     {
-        return $this->isSold;
+        return $this->is_transmitted_method;
     }
 
-    public function setSold(?bool $isSold): static
+    public function setTransmittedMethod(?bool $is_transmitted_method): static
     {
-        $this->isSold = $isSold;
+        $this->is_transmitted_method = $is_transmitted_method;
 
         return $this;
     }
 
-    public function isPending(): ?bool
+    public function getValidation(): ?string
     {
-        return $this->isPending;
+        return $this->validation;
     }
 
-    public function setPending(?bool $isPending): static
+    public function setValidation(?string $validation): static
     {
-        $this->isPending = $isPending;
+        $this->validation = $validation;
 
         return $this;
     }
 
-    public function isTransferMethod(): ?bool
+    public function getDtTotNumber(): ?string
     {
-        return $this->IsTransferMethod;
+        return $this->dt_tot_number;
     }
 
-    public function setTransferMethod(?bool $IsTransferMethod): static
+    public function setDtTotNumber(?string $dt_tot_number): static
     {
-        $this->IsTransferMethod = $IsTransferMethod;
+        $this->dt_tot_number = $dt_tot_number;
+
+        return $this;
+    }
+
+    public function getPaCstaNumber(): ?string
+    {
+        return $this->pa_csta_number;
+    }
+
+    public function setPaCstaNumber(?string $pa_csta_number): static
+    {
+        $this->pa_csta_number = $pa_csta_number;
+
+        return $this;
+    }
+
+    public function getValidationResponsable(): ?string
+    {
+        return $this->validation_responsable;
+    }
+
+    public function setValidationResponsable(?string $validation_responsable): static
+    {
+        $this->validation_responsable = $validation_responsable;
+
+        return $this;
+    }
+
+    public function getValidationDate(): ?\DateTimeImmutable
+    {
+        return $this->validation_date;
+    }
+
+    public function setValidationDate(?\DateTimeImmutable $validation_date): static
+    {
+        $this->validation_date = $validation_date;
+
+        return $this;
+    }
+
+    public function getObservations(): ?string
+    {
+        return $this->observations;
+    }
+
+    public function setObservations(?string $observations): static
+    {
+        $this->observations = $observations;
+
+        return $this;
+    }
+
+    public function getImplementationResponsable(): ?string
+    {
+        return $this->implementation_responsable;
+    }
+
+    public function setImplementationResponsable(?string $implementation_responsable): static
+    {
+        $this->implementation_responsable = $implementation_responsable;
+
+        return $this;
+    }
+
+    public function getImplementationDate(): ?\DateTimeImmutable
+    {
+        return $this->implementation_date;
+    }
+
+    public function setImplementationDate(?\DateTimeImmutable $implementation_date): static
+    {
+        $this->implementation_date = $implementation_date;
+
+        return $this;
+    }
+
+    public function getMethodAnalysisConfirmation(): ?string
+    {
+        return $this->method_analysis_confirmation;
+    }
+
+    public function setMethodAnalysisConfirmation(?string $method_analysis_confirmation): static
+    {
+        $this->method_analysis_confirmation = $method_analysis_confirmation;
+
+        return $this;
+    }
+
+    public function getMethodImpactProtectionInterests(): ?string
+    {
+        return $this->method_impact_protection_interests;
+    }
+
+    public function setMethodImpactProtectionInterests(?string $method_impact_protection_interests): static
+    {
+        $this->method_impact_protection_interests = $method_impact_protection_interests;
+
+        return $this;
+    }
+
+    public function getMethodRetainedSolutions(): ?string
+    {
+        return $this->method_retained_solutions;
+    }
+
+    public function setMethodRetainedSolutions(?string $method_retained_solutions): static
+    {
+        $this->method_retained_solutions = $method_retained_solutions;
 
         return $this;
     }

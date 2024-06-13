@@ -2,39 +2,50 @@
 
 namespace App\Entity;
 
-use App\Repository\TOTRepository;
+use App\Entity\Traits\TimestampTrait;
+use App\Repository\WorkTaskRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UlidType;
+use Symfony\Component\Uid\Ulid;
 
-#[ORM\Entity(repositoryClass: TOTRepository::class)]
-class TOT
+#[ORM\Entity(repositoryClass: WorkTaskRepository::class)]
+#[ORM\Table(name: 'work_tasks')]
+class WorkTask
 {
+    use TimestampTrait;
+
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: UlidType::NAME, unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
+    private ?Ulid $id = null;
 
-    #[ORM\Column]
-    private ?int $number = null;
+    #[ORM\Column(type: Types::SMALLINT)]
+    private int $task_number;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(type: Types::STRING ,length: 100)]
     private ?string $libelle = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tots')]
-    private ?OT $oT = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $instruction = null;
 
-    public function getId(): ?int
+    #[ORM\ManyToOne(targetEntity: WorkOrder::class, inversedBy: 'workTasks')]
+    private WorkOrder $workOrder;
+
+    public function getId(): ?Ulid
     {
         return $this->id;
     }
 
-    public function getNumber(): ?int
+    public function getTaskNumber(): ?int
     {
-        return $this->number;
+        return $this->task_number;
     }
 
-    public function setNumber(int $number): static
+    public function setTaskNumber(int $task_number): static
     {
-        $this->number = $number;
+        $this->task_number = $task_number;
         return $this;
     }
 
@@ -49,14 +60,27 @@ class TOT
         return $this;
     }
 
-    public function getOT(): ?OT
+    public function getInstruction(): ?string
     {
-        return $this->oT;
+        return $this->instruction;
     }
 
-    public function setOT(?OT $oT): static
+    public function setInstruction(?string $instruction): static
     {
-        $this->oT = $oT;
+        $this->instruction = $instruction;
+
+        return $this;
+    }
+
+    public function getWorkOrder(): ?WorkOrder
+    {
+        return $this->workOrder;
+    }
+
+    public function setWorkOrder(?WorkOrder $workOrder): static
+    {
+        $this->workOrder = $workOrder;
+
         return $this;
     }
 }
