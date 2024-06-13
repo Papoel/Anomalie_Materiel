@@ -14,7 +14,7 @@ class OtFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create();
+        $faker = Factory::create(locale: 'fr_FR');
 
         for ($i = 1; $i <= 25; $i++) {
             $ot = new OT();
@@ -28,10 +28,10 @@ class OtFixtures extends Fixture
 
             $manager->persist($ot);
 
-            for ($j = 1; $j <= $faker->numberBetween(1, 5); $j++) {
+            for ($j = 1; $j <= $faker->numberBetween(int1: 1, int2: 5); $j++) {
                 $tot = new TOT();
-                $tot->setNumber($faker->numberBetween(1, 100));
-                $tot->setLibelle($faker->text($faker->numberBetween(20, 100)));
+                $tot->setNumber(number: $faker->numberBetween(int1: 1, int2: 100));
+                $tot->setLibelle(libelle: $faker->text($faker->numberBetween(int1: 20, int2: 100)));
                 $tot->setOT($ot);
                 $manager->persist($tot);
             }
