@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    platform: linux/x86_64
+    container_name: database_anomalix
+    restart: always
+    volumes:
+      - database_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: db_anomalix
+    ports:
+      - "3306:3306"
+    networks:
+      - adminer_network
+
+  adminer:
+    image: adminer
+    container_name: adminer_anomalix
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+      ADMINER_DESIGN: pepa-linha
+      ADMINER_PLUGINS: tables-filter
+    depends_on:
+      - mariadb
+    ports:
+      - "8085:8080"
+    networks:
+      - adminer_network
+
+volumes:
+  database_data:
+
+networks:
+  adminer_network:
