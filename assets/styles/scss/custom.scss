@@ -21,3 +21,14 @@ $body-color: #747d88;
 // Importer les Fonts
 @import url('../../fonts/Hind/Hind-Medium.ttf');
 @import url('../../fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+
+// Style CARDS
+.card-title {
+    font-family: 'Hind', sans-serif;
+    font-weight: 400;
+}
+
+.card-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
