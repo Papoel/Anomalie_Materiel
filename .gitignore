@@ -80,5 +80,5 @@
 ###< castor/castor ###
 
 ###> docs private ###
-./docs/private/
+docs/private/*
 ###< docs private ###
