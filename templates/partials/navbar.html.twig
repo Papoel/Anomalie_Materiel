@@ -52,37 +52,41 @@
                         <a href="{{ path('home_index') }}" class="nav-item nav-link {{ app.request.attributes.get('_route') == 'home_index' ? 'active' : 'text-danger' }}">
                             Accueil
                         </a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Fiche d'anomalie matérielle
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-eye me-2"></i>
-                                        Consulter
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-plus me-2"></i>
-                                        Création
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item text-danger" href="#">
-                                        <i class="fa fa-trash me-2"></i>
-                                        Supprimer
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <a href="#" class="nav-item nav-link">Contacter le support</a>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Fiche d'anomalie matérielle
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fa fa-eye me-2"></i>
+                                            Rechercher une fiche de constat
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fa fa-plus me-2"></i>
+                                            Créer une fiche de constat
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#">
+                                            <i class="fa fa-trash me-2"></i>
+                                            Supprimer une fiche de constat
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                     <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
-                        {{ include('partials/meteo.html.twig') }}
-                        <button class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto ms-2"
+
+                        {# TODO: Rendre les données accessible à toutes les pages de l'application #}
+                        {# {{ include('partials/meteo.html.twig') }} #}
+
+                        <button class="btn-search btn border border-primary btn-md-square rounded-circle bg-secondary-subtle my-auto ms-2"
                                 data-bs-toggle="modal"
                                 data-bs-target="#searchModal">
                             <i class="fas fa-search text-primary"></i>
