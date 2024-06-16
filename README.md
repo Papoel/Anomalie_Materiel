@@ -4,14 +4,14 @@
 
 ## 📋 Table des matières
 
-- [📦 Installation](#installation)
-- [🛠️ Utilisation](#utilisation)
-- [🤝 Contribution](#contribution)
-- [🧪 Tests](#tests)
-- [🚀 Déploiement](#déploiement)
-- [📜 Licence](#licence)
-- [📚 Documentation](#documentation)
-- [📞 Contact](#contact)
+- [📦 Installation](#-installation)
+- [🛠️ Utilisation](#-utilisation)
+- [🤝 Contribution](#-contribution)
+- [🧪 Tests](#-tests)
+- [🚀 Déploiement](#-déploiement)
+- [📜 Licence](#-licence)
+- [📚 Documentation](#-documentation)
+- [📞 Contact](#-contact)
 
 ## 📦 Installation
 
