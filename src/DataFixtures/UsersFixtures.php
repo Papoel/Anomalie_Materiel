@@ -31,14 +31,14 @@ class UsersFixtures extends Fixture
         $manager->persist($admin);
 
         // Generate 5 users
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 5; ++$i) {
             $user = new User();
             // Random NNI : start with letter between A and Z and 5 digits
             $user->setFirstname(firstname: $faker->firstName());
             $user->setLastname(lastname: $faker->lastName());
             $user->setNni(nni: $faker->regexify(regex: '/[A-Z]\d{5}/'));
-            //$user->setRoles(roles: ['ROLE_USER']);
-            $user->setEmail(email: strtolower(string: $user->getFirstname()) . '.' . strtolower(string: $user->getLastname()) . '@edf.fr');
+            // $user->setRoles(roles: ['ROLE_USER']);
+            $user->setEmail(email: strtolower(string: $user->getFirstname()).'.'.strtolower(string: $user->getLastname()).'@edf.fr');
             $hash = $this->passwordHasher->hashPassword(user: $user, plainPassword: 'user');
             $user->setPassword(password: $hash);
 

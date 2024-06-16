@@ -13,14 +13,14 @@ class ConstatFixtures extends Fixture
     {
         $faker = Factory::create(locale: 'fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $constat = new Constat();
             $constat->setReference($faker->unique()->word);
             $tr = ['0', '1', '2', '9'];
             $se = ['ABP', 'AHP', 'ARE', 'CVI', 'DVN', 'EAS', 'LHP', 'LHQ', 'LHU', 'RCV', 'TEU', 'TEP', 'TEG', 'SAR', 'SAT', 'LLP'];
-            $number = $faker->numberBetween( int1: 001, int2: 999);
+            $number = $faker->numberBetween(int1: 001, int2: 999);
             $type = ['DS', 'PO', 'RE', 'BA', 'CH', 'DI', 'TY'];
-            $functional_marker = $tr[array_rand($tr)] . $se[array_rand($se)] . $number . $type[array_rand($type)];
+            $functional_marker = $tr[array_rand($tr)].$se[array_rand($se)].$number.$type[array_rand($type)];
             $constat->setFunctionalMarker($functional_marker);
             $constat->setEquipmentLabel($faker->word);
             $constat->setDescription($faker->paragraph);
@@ -62,7 +62,7 @@ class ConstatFixtures extends Fixture
             $date_created_at = $faker->dateTimeBetween($startDate = '-8 years', $endDate = 'now');
             $immutable = \DateTimeImmutable::createFromMutable($date_created_at);
             $constat->setCreatedAtValue($immutable);
-            $date_updated_at= $immutable->modify(modifier: '+' . $faker->numberBetween(int1: 0, int2: 8) . ' years');
+            $date_updated_at = $immutable->modify(modifier: '+'.$faker->numberBetween(int1: 0, int2: 8).' years');
             $constat->setUpdatedAtValue($date_updated_at);
 
             $manager->persist($constat);

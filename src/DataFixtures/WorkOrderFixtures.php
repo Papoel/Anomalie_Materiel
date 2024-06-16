@@ -13,7 +13,7 @@ class WorkOrderFixtures extends Fixture
     {
         $faker = Factory::create(locale: 'fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $workOrder = new WorkOrder();
 
             $workOrder->setOrderNumber(order_number: $faker->regexify(regex: '/\d{8}/'));
@@ -25,7 +25,7 @@ class WorkOrderFixtures extends Fixture
             $date_created_at = $faker->dateTimeBetween($startDate = '-8 years', $endDate = 'now');
             $immutable = \DateTimeImmutable::createFromMutable($date_created_at);
             $workOrder->setCreatedAtValue($immutable);
-            $date_updated_at= $immutable->modify(modifier: '+' . $faker->numberBetween(int1: 0, int2: 8) . ' years');
+            $date_updated_at = $immutable->modify(modifier: '+'.$faker->numberBetween(int1: 0, int2: 8).' years');
             $workOrder->setUpdatedAtValue($date_updated_at);
 
             $manager->persist($workOrder);
