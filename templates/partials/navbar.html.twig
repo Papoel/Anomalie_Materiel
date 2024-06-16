@@ -84,8 +84,8 @@
                     <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
 
                         {# TODO: Rendre les données accessible à toutes les pages de l'application #}
-                        {# {{ include('partials/meteo.html.twig') }} #}
 
+                        {% include 'partials/weather.html.twig' with {'weather': weather, 'city': city} %}
                         <button class="btn-search btn border border-primary btn-md-square rounded-circle bg-secondary-subtle my-auto ms-2"
                                 data-bs-toggle="modal"
                                 data-bs-target="#searchModal">

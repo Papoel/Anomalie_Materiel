@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Weather;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,18 +24,23 @@ readonly class WeatherService
 
     /**
      * @return array<string, mixed>|null
+     *
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function getWeatherByCity(): ?array
     {
         $weather = [];
 
         $cityData = $this->geoLocationService->getCityByIp();
-        if ($cityData === null || !isset($cityData['name'])) {
+        if (null === $cityData || !isset($cityData['name'])) {
             return null;
         }
 
         $url = 'https://api.openweathermap.org/data/2.5/weather?q=';
-        // $city = strtolower($this->geoLocationService->getCityByIp()['name']);
         $city = strtolower($cityData['name']);
 
         $apiKey = $this->params->get('OPENWEATHERMAP_API_KEY');
@@ -48,7 +53,7 @@ readonly class WeatherService
         $lang = 'fr';
 
         // Vérification des valeurs avant la concaténation
-        if ($apiKey === '') {
+        if ('' === $apiKey) {
             return null;
         }
 

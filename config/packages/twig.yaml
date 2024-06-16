@@ -3,7 +3,7 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_5_layout.html.twig']
     globals:
-    # variable name: value
+        #weather: '@App\Service\Weather\GlobalDataService'
 
 when@test:
     twig:
