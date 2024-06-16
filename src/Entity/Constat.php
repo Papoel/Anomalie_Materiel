@@ -107,6 +107,11 @@ class Constat
         return $this->reference;
     }
 
+    public function getId(): ?Ulid
+    {
+        return $this->id;
+    }
+
     public function setReference(?string $reference): static
     {
         $this->reference = $reference;
