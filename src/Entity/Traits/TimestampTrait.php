@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Entity\Traits;
 
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-trait TimestampTrait {
+trait TimestampTrait
+{
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private DateTimeImmutable $created_at;
+    private \DateTimeImmutable $created_at;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void

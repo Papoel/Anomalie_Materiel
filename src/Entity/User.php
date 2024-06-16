@@ -8,14 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UlidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`users`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_NNI', fields: ['nni'])]
 #[ORM\HasLifecycleCallbacks]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, stringable
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     use Traits\TimestampTrait;
     #[ORM\Id]
@@ -32,18 +31,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, stringa
     #[ORM\Column(type: Types::STRING, length: 6, unique: true)]
     private ?string $nni = null;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
 
     #[ORM\Column(type: Types::STRING)]
-    private ?string $password = null;
+    private string $password;
 
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $email = null;
 
     public function __toString(): string
     {
-        return $this->getFirstName() . ' ' . $this->getLastName() . ' (' . $this->getNni() . ')';
+        return $this->getFirstName().' '.$this->getLastName().' ('.$this->getNni().')';
     }
 
     public function getId(): ?Ulid
@@ -87,6 +89,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, stringa
         return (string) $this->nni;
     }
 
+    /**
+     * @return array|string[]
+     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -96,6 +101,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, stringa
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;

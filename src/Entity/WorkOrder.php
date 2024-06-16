@@ -58,6 +58,7 @@ class WorkOrder
     public function setOrderNumber(string $order_number): static
     {
         $this->order_number = $order_number;
+
         return $this;
     }
 
@@ -69,6 +70,7 @@ class WorkOrder
     public function setLibelle(string $libelle): static
     {
         $this->libelle = $libelle;
+
         return $this;
     }
 
@@ -80,6 +82,7 @@ class WorkOrder
     public function setProject(string $project): static
     {
         $this->project = $project;
+
         return $this;
     }
 

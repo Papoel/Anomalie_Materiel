@@ -24,14 +24,14 @@ class WorkTask
     #[ORM\Column(type: Types::SMALLINT)]
     private int $task_number;
 
-    #[ORM\Column(type: Types::STRING ,length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $instruction = null;
 
     #[ORM\ManyToOne(targetEntity: WorkOrder::class, inversedBy: 'workTasks')]
-    private WorkOrder $workOrder;
+    private ?WorkOrder $workOrder = null;
 
     public function getId(): ?Ulid
     {
@@ -46,6 +46,7 @@ class WorkTask
     public function setTaskNumber(int $task_number): static
     {
         $this->task_number = $task_number;
+
         return $this;
     }
 
@@ -57,6 +58,7 @@ class WorkTask
     public function setLibelle(string $libelle): static
     {
         $this->libelle = $libelle;
+
         return $this;
     }
 
