@@ -25,6 +25,7 @@ trait TimestampTrait
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): void
     {
-        $this->updated_at = new \DateTimeImmutable();
+        $timezone = new \DateTimeZone(timezone: 'Europe/Paris');
+        $this->updated_at = new \DateTimeImmutable(timezone: $timezone);
     }
 }

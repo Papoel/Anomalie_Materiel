@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Types\UlidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Ulid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`users`')]
@@ -18,28 +19,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 {
     use Traits\TimestampTrait;
     #[ORM\Id]
-    #[ORM\Column(type: UlidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
+    #[ORM\Column(type: UlidType::NAME, unique: true)]
     private ?Ulid $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2, max: 50,
+        minMessage: 'Le prénom doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le prénom doit contenir au maximum {{ limit }} caractères.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'Le prénom ne doit contenir que des lettres.'
+    )]
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $firstname = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2, max: 50,
+        minMessage: 'Le nom doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le nom doit contenir au maximum {{ limit }} caractères.'
+    )]
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $lastname = null;
+
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 6, max: 6,
+        minMessage: 'Le NNI doit contenir {{ limit }} caractères.',
+        maxMessage: 'Le NNI doit contenir {{ limit }} caractères.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z][0-9]{5}$/',
+        message: 'Le NNI doit commencer par une lettre suivie de 5 chiffres.'
+    )]
     #[ORM\Column(type: Types::STRING, length: 6, unique: true)]
     private ?string $nni = null;
 
     /**
      * @var string[]
      */
+    #[Assert\NotBlank]
+    #[Assert\Count(min: 1)]
     #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 6, minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.')]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+        message: 'Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un chiffre.'
+    )]
+    #[Assert\NotCompromisedPassword]
     #[ORM\Column(type: Types::STRING)]
     private string $password;
 
+    #[Assert\Email]
+    #[Assert\Length(max: 180, maxMessage: 'L\'adresse email doit contenir au maximum {{ limit }} caractères.')]
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $email = null;
 
