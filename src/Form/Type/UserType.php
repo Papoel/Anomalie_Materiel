@@ -58,18 +58,30 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'required' => false,
                 'first_options' => [
+                    'toggle' => true,
+                    'hidden_label' => 'Masquer',
+                    'visible_label' => 'Afficher',
+                    'button_classes' => ['btn', 'btn-sm'],
+                    'toggle_container_classes' => ['input-group-text'],
                     'label' => false,
                     'always_empty' => false, // Permet de ne pas afficher le champ 'Mot de passe' si le champ 'Mot de passe' est vide
                     'attr' => [
                         'placeholder' => 'Mot de passe',
+                        'class' => 'border-0 border-end border-blue rounded-0 border-2',
                     ],
                     'required' => false,
                 ],
                 'second_options' => [
+                    'toggle' => true,
+                    'hidden_label' => 'Masquer',
+                    'visible_label' => 'Afficher',
+                    'button_classes' => ['btn', 'btn-sm'],
+                    'toggle_container_classes' => ['input-group-text'],
                     'label' => false,
                     'always_empty' => false, // Permet de ne pas afficher le champ 'Répéter le mot de passe' si le champ 'Mot de passe' est vide
                     'attr' => [
                         'placeholder' => 'Répéter le mot de passe',
+                        'class' => 'border-0 border-end border-blue rounded-0 border-2',
                     ],
                     'required' => false,
                 ],
