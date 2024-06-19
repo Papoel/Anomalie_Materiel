@@ -67,7 +67,7 @@ class UserType extends AbstractType
                     'always_empty' => false, // Permet de ne pas afficher le champ 'Mot de passe' si le champ 'Mot de passe' est vide
                     'attr' => [
                         'placeholder' => 'Mot de passe',
-                        'class' => 'border-0 border-end border-blue rounded-0 border-2',
+                        'class' => 'border-0 border-end border-blue rounded-3 border-3',
                     ],
                     'required' => false,
                 ],
@@ -81,7 +81,7 @@ class UserType extends AbstractType
                     'always_empty' => false, // Permet de ne pas afficher le champ 'Répéter le mot de passe' si le champ 'Mot de passe' est vide
                     'attr' => [
                         'placeholder' => 'Répéter le mot de passe',
-                        'class' => 'border-0 border-end border-blue rounded-0 border-2',
+                        'class' => 'border-0 border-end border-blue rounded-3 border-3',
                     ],
                     'required' => false,
                 ],
