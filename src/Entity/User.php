@@ -78,6 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     private string $password;
 
     #[Assert\Email]
+    #[Assert\NotBlank]
     #[Assert\Length(max: 180, maxMessage: 'L\'adresse email doit contenir au maximum {{ limit }} caractères.')]
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $email = null;

@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\User;
+use App\EventSubscriber\UserTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -41,17 +42,17 @@ class UserType extends AbstractType
                 'required' => false,
             ])
             ->add(child: 'roles', type: CollectionType::class, options: [
-                'label' => false,
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
                     'label' => false,
                     'choices' => [
                         'Utilisateur' => 'ROLE_USER',
-                        'Administrateur' => 'ROLE_ADMIN',
                         'Chargé d\'affaires' => 'ROLE_CHARGE_AFFAIRES',
                         'Méthode' => 'ROLE_METHODE',
+                        'Administrateur' => 'ROLE_ADMIN',
                     ],
                 ],
+                'label' => false,
                 'required' => false,
             ])
             ->add(child: 'password', type: RepeatedType::class, options: [
@@ -96,6 +97,7 @@ class UserType extends AbstractType
             ->add(child: 'submit', type: SubmitType::class, options: [
                 'label' => 'Créer un compte',
             ])
+            ->addEventSubscriber(subscriber: new UserTypeSubscriber())
         ;
     }
 
