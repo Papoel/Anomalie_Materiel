@@ -17,3 +17,6 @@ import './styles/app.css';
 
 // Custom Theme
 import './styles/scss/custom.css';
+
+// Custom JS
+import './scripts/time.js';
