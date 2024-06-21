@@ -54,7 +54,7 @@ function simpleStart(): void
     serverStart();
     parallel(
         fn() => run(command: 'phpstorm .'),
-        fn() => run(command: 'symfony open:local')
+        fn() => run(command: 'open https://localhost:8000')
     );
 
 }
@@ -116,15 +116,12 @@ function resetDb(): void
     createDb();
     // 3. Verify if in folder src/Migrations contains files
     $migrations = finder()->in(dirs: 'migrations')->files();
-    if (count($migrations) > 0) {
-        // 4. Migrate database
-        migrate();
-    } else {
+    if (count($migrations) <= 0) {
         // 4. Create database schema
         migration();
         // 5. Migrate database
-        migrate();
     }
+    migrate();
     // 4. if I have fixtures in my project I can load them
     fixtures();
     // if all is OK, return success
@@ -439,11 +436,10 @@ function start(): void
 {
     parallel(
         fn() => up(),
-        fn() => serverStart(),
+        fn() => simpleStart()
     );
 
-    run(command: 'symfony open:local');
-    notify('Projet démarré avec succès');
+    notify(message: 'Projet démarré avec succès');
 }
 
 /* ******************** 🛑 STOP 🛑 ******************** */
