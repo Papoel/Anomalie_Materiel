@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Twig\Components;
+namespace App\Twig;
 
 use App\Entity\User;
 use App\Form\Type\UserType;
@@ -31,10 +31,11 @@ final class UserForm extends AbstractController
     protected function instantiateForm(): FormInterface
     {
         $this->initialFormData ??= new User();
+        // Rendre le nom.prenom dans email
+        $this->initialFormData->setEmail($this->initialFormData->getFirstname() . '.' . $this->initialFormData->getLastname(). '@edf.fr');
 
         return $this->createForm(type: UserType::class, data: $this->initialFormData);
     }
-
     #[LiveAction]
     public function save(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -49,19 +50,19 @@ final class UserForm extends AbstractController
             throw new \RuntimeException(message: 'Le formulaire n\'a pas été initialisé.');
         }
 
-        /** @var User $user */
-        $user = $this->form->getData();
+        /** @var User $data */
+        $data = $this->form->getData();
 
         // Hasher le mot de passe
-        $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
-        $user->setPassword($hashedPassword);
+        $hashedPassword = $passwordHasher->hashPassword($data, $data->getPassword());
+        $data->setPassword($hashedPassword);
 
-        $entityManager->persist($user);
+        $entityManager->persist($data);
         $entityManager->flush();
 
         // Si le formulaire est valide, on redirige vers la page d'accueil
         return $this->redirectToRoute(route: 'user_show', parameters: [
-            'nni' => $user->getNni(),
+            'nni' => $data->getNni(),
         ]);
     }
 }

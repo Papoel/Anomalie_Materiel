@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         maxMessage: 'Le prénom doit contenir au maximum {{ limit }} caractères.'
     )]
     #[Assert\Regex(
-        pattern: '/^[a-zA-Z]+$/',
+        pattern: '/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/u',
         message: 'Le prénom ne doit contenir que des lettres.'
     )]
     #[ORM\Column(type: Types::STRING, length: 50)]
@@ -42,6 +42,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         min: 2, max: 50,
         minMessage: 'Le nom doit contenir au moins {{ limit }} caractères.',
         maxMessage: 'Le nom doit contenir au maximum {{ limit }} caractères.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/u',
+        message: 'Le nom ne doit contenir que des lettres.'
     )]
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $lastname = null;
@@ -64,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
      */
     #[Assert\NotBlank]
     #[Assert\Count(min: 1)]
-    #[ORM\Column(type: Types::JSON)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $roles = [];
 
     #[Assert\NotBlank]
@@ -136,7 +140,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = null;
 
         return array_unique($roles);
     }

@@ -45,6 +45,8 @@ class UserType extends AbstractType
                 'entry_type' => ChoiceType::class,
                 'entry_options' => [
                     'label' => false,
+                    // role by default
+                    'data' => 'ROLE_USER',
                     'choices' => [
                         'Utilisateur' => 'ROLE_USER',
                         'Chargé d\'affaires' => 'ROLE_CHARGE_AFFAIRES',
