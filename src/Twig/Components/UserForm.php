@@ -10,6 +10,7 @@ use App\Service\User\UserPasswordHasherService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -36,7 +37,7 @@ final class UserForm extends AbstractController
     }
 
     #[LiveAction]
-    public function save(EntityManagerInterface $entityManager, UserPasswordHasherService $passwordHasher): Response
+    public function save(EntityManagerInterface $entityManager, UserPasswordHasherService $passwordHasher): RedirectResponse
     {
         // Valider le formulaire
         $this->validate();
@@ -78,10 +79,8 @@ final class UserForm extends AbstractController
         }
 
         $entityManager->flush();
-        $firstName = $data->getFirstname();
-        $lastName = $data->getLastname();
 
-        $this->addFlash(type: 'success', message: "L'utilisateur \"$firstName $lastName\" a été créé avec succès.");
+        $this->addFlash(type: 'success', message: "L'utilisateur \"{$data->getFullName()}\" a été créé avec succès.");
 
         // Si le formulaire est valide, on redirige vers la page de l'utilisateur créé
         return $this->redirectToRoute(route: 'user_show', parameters: [
