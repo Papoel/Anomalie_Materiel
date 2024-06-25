@@ -92,6 +92,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this->getFirstName().' '.$this->getLastName().' ('.$this->getNni().')';
     }
 
+    public function getFullName(): string
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
     public function getId(): ?Ulid
     {
         return $this->id;
