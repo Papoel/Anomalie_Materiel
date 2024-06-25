@@ -19,6 +19,8 @@
             {% include 'partials/navbar.html.twig' %}
         {% endif %}
 
+        {% include 'partials/_flash.html.twig' %}
+
         {% block body %}{% endblock %}
 
         {% include 'modals/user/modal_create_user.html.twig' %}
