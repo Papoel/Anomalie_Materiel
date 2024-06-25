@@ -82,3 +82,7 @@
 ###> docs private ###
 docs/private/*
 ###< docs private ###
+
+###> phpCsFixer ###
+/.php-cs-fixer.cache
+###< phpCsFixer ###
