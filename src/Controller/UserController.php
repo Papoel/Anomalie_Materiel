@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
-    #[Route('/user/{nni}', name: 'user_show', methods: [Request::METHOD_GET])]
+    #[Route('/user/{id}', name: 'user_show', methods: [Request::METHOD_GET])]
     public function show(?User $user): Response
     {
         if (!$user) {
