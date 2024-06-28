@@ -20,13 +20,10 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home_index', methods: [Request::METHOD_GET])]
     public function index(): Response
     {
-        $cityData = $this->geoLocationService->getCityByIp();
+        // $cityData = $this->geoLocationService->getCityByIp();
 
-        $weatherData = $this->globalDataService->getWeatherData();
+        // $weatherData = $this->globalDataService->getWeatherData();
 
-        return $this->render(view: 'home/index.html.twig', parameters: [
-            'city' => $cityData,
-            'weather' => $weatherData,
-        ]);
+        return $this->render(view: 'home/index.html.twig');
     }
 }
