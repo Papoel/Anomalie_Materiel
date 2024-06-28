@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    {% set breadcrumbs = [
+        { 'url': path('home_index'), 'label': 'Accueil' },
+        { 'url': path('user_index'), 'label': 'Utilisateurs' },
+        { 'url': null, 'label': 'Liste' }
+    ] %}
+    {% include 'partials/breadcrumb.html.twig' %}
+
+    <section class="container mt-4">
+        <h1>Liste des utilisateurs</h1>
+
+        {% if users|length > 0 %}
+            <div class="alert alert-primary mb-3" role="alert" style="opacity:60%">
+                {{ users|length }} {{ pluralize(users|length, 'utilisateur trouvé', 'utilisateurs trouvés') }}
+            </div>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>NNI</th>
+                    <th>Rôles</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.nni }}</td>
+                        <td>
+                            {% for role in user.roles %}
+                                {% set badgeColor =
+                                    role == 'ROLE_ADMIN' ? 'bg-danger' :
+                                    role == 'ROLE_USER' ? 'bg-blue' :
+                                    role == 'ROLE_METHODE' ? 'bg-warning text-dark' :
+                                    role == 'ROLE_CHARGE_AFFAIRES' ? 'bg-success' : 'bg-secondary'
+                                %}
+                                {% set roleLabel =
+                                    role == 'ROLE_ADMIN' ? 'Administrateur' :
+                                    role == 'ROLE_USER' ? 'Utilisateur' :
+                                    role == 'ROLE_METHODE' ? 'Méthode' :
+                                    role == 'ROLE_CHARGE_AFFAIRES' ? 'Chargé d\'affaires' : 'Inconnu'
+                                %}
+                                <span class="badge rounded-pill {{ badgeColor }} px-3 py-2 fw-lighter" style="font-size: small;">{{ roleLabel }}</span>
+                            {% endfor %}
+                        </td>
+
+                        {#                            <span class="badge rounded-pill {{ badgeColor }} px-3 py-2 fw-lighter">{{ role }}</span>#}
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i> Voir
+                            </a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-secondary me-2">
+                                <i class="bi bi-pencil"></i> Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info">Aucun utilisateur n'a été trouvé</div>
+        {% endif %}
+
+        <a href="#" class="btn btn-sm btn-primary mt-3 text-light" data-bs-target="#modalCreateUser" data-bs-toggle="modal">Créer un utilisateur</a>
+    </section>
+{% endblock %}

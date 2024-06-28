@@ -4,14 +4,15 @@
 
 ## 📋 Table des matières
 
-- [📦 Installation](#installation)
-- [🛠️ Utilisation](#utilisation)
-- [🤝 Contribution](#contribution)
-- [🧪 Tests](#tests)
-- [🚀 Déploiement](#déploiement)
-- [📜 Licence](#licence)
-- [📚 Documentation](#documentation)
-- [📞 Contact](#contact)
+- [📦 Installation](#-installation)
+- [🛠️ Utilisation](#-utilisation)
+- [🤝 Contribution](#-contribution)
+- [🧪 Tests](#-tests)
+- [🚀 Déploiement](#-déploiement)
+- [📜 Licence](#-licence)
+- [📚 Documentation](#-documentation)
+- [📞 Contact](#-contact)
+- [✏️ Conventions de Commit](#-conventions-de-commit)
 
 ## 📦 Installation
 
@@ -73,6 +74,31 @@ Pour toute question ou suggestion, vous pouvez me contacter par les moyens suiva
 - 💬 Discord : #papoel
 - 🐙 GitHub : [https://www.github.com/Papoel](https://www.github.com/Papoel)
 
+## ✏️ Conventions de Commit
+
+Les messages de commit doivent suivre les conventions suivantes :
+
+| Type     | Description                                                                                              |
+|----------|----------------------------------------------------------------------------------------------------------|
+| build    | Pour des changements affectant le système de build ou des dépendances externes.                          |
+| chore    | Pour des tâches de maintenance diverses qui n'entrent pas dans les catégories ci-dessus.                 |
+| ci       | Pour des changements dans les fichiers et scripts de configuration CI.                                   |
+| deps     | Pour les mises à jour des librairies, packages ou dépendances.                                           |
+| docs     | Pour des changements dans la documentation seulement.                                                    |
+| feat     | Pour l'ajout d'une nouvelle fonctionnalité.                                                              |
+| fix      | Pour la correction d'un bug.                                                                             |
+| hotfix   | Pour des corrections urgentes et critiques de bugs.                                                      |
+| perf     | Pour des changements de code qui améliorent les performances.                                            |
+| refactor | Pour des modifications du code qui n'ajoutent pas de nouvelle fonctionnalité et ne corrigent pas de bug. |
+| revert   | Pour annuler un commit précédent.                                                                        |
+| style    | Pour des changements qui n'affectent pas le sens du code (formatage, espaces, etc.).                     |
+| test     | Pour l'ajout ou la modification de tests.                                                                |
+
+> ⚠️ Cette convention de commit arrive tardivement dans le projet. Étant donné que c'est une bonne pratique dont je viens de prendre connaissance, je vais essayer de faire l'effort de la suivre dorénavant.
+
 ---
+
+
+
 
 Merci d'utiliser **Easy Constat** ! 🚀

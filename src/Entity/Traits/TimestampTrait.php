@@ -9,22 +9,24 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait TimestampTrait
 {
+    public const TIMEZONE = 'Europe/Paris';
+
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private \DateTimeImmutable $created_at;
+    public \DateTimeImmutable $created_at;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $updated_at = null;
+    public ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
         $this->created_at = new \DateTimeImmutable();
-        $this->setUpdatedAtValue();
     }
 
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): void
     {
-        $this->updated_at = new \DateTimeImmutable();
+        $timezone = new \DateTimeZone(timezone: self::TIMEZONE);
+        $this->updated_at = new \DateTimeImmutable(timezone: $timezone);
     }
 }

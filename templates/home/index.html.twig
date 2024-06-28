@@ -3,7 +3,12 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
+    {% set breadcrumbs = [
+        { 'url': path('home_index'), 'label': 'Accueil' },
+    ] %}
+    {% include 'partials/breadcrumb.html.twig' %}
+
+    <main class="container-fluid">
         <div class="row">
             <h1 class="text-center mt-4">Bienvenue sur Easy Constat</h1>
             <section id="cards" class="container mt-4">
@@ -25,6 +30,6 @@
                 </div>
             </section>
         </div>
-    </div>
+    </main>
 
 {% endblock %}

@@ -37,7 +37,8 @@ class UsersFixtures extends Fixture
             $user->setFirstname(firstname: $faker->firstName());
             $user->setLastname(lastname: $faker->lastName());
             $user->setNni(nni: $faker->regexify(regex: '/[A-Z]\d{5}/'));
-            // $user->setRoles(roles: ['ROLE_USER']);
+            $roles = ['ROLE_USER', 'ROLE_CHARGE_AFFAIRES', 'ROLE_METHODE'];
+            $user->setRoles(roles: [$roles[array_rand($roles)]]);
             $user->setEmail(email: strtolower(string: $user->getFirstname()).'.'.strtolower(string: $user->getLastname()).'@edf.fr');
             $hash = $this->passwordHasher->hashPassword(user: $user, plainPassword: 'user');
             $user->setPassword(password: $hash);

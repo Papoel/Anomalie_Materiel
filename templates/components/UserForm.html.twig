@@ -1,0 +1,48 @@
+<div{{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'novalidate': false,
+            'data-action': 'live#action:prevent',
+            'data-live-action-param': 'save',
+        }
+    }) }}
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-4">
+                {{ form_row(form.firstname) }}
+            </div>
+            <div class="col-5">
+                {{ form_row(form.lastname) }}
+            </div>
+            <div class="col-3">
+                {{ form_row(form.nni) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(form.email) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(form.password.first) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(form.password.second) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.roles) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-sm btn-primary text-white">Enregistrer</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" data-bs-dismiss="modal">Fermer</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
