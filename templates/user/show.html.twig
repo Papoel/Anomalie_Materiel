@@ -1,75 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Détails de l'utilisateur{% endblock %}
 
 {% block body %}
     {% set breadcrumbs = [
         { 'url': path('home_index'), 'label': 'Accueil' },
         { 'url': path('user_index'), 'label': 'Utilisateurs' },
-        { 'url':  path('user_index'), 'label': 'Détails' },
+        { 'url':  path('user_show', {'id': user.id}), 'label': 'Détails' },
         { 'text': null, 'label': 'Données de ' ~ user.firstname ~ ' ' ~ user.lastname ~ ' (' ~ user.nni ~ ')' }
     ] %}
     {% include 'partials/breadcrumb.html.twig' %}
 
     <main class="container mt-4">
+        <h1 class="mb-4">Données de {{ user.firstname }} {{ user.lastname }}</h1>
 
-        <h1>Données de {{ user.firstname }} {{ user.lastname }}</h1>
-
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ user.id }}</td>
-                </tr>
-                <tr>
-                    <th>Firstname</th>
-                    <td>{{ user.firstname }}</td>
-                </tr>
-                <tr>
-                    <th>Lastname</th>
-                    <td>{{ user.lastname }}</td>
-                </tr>
-                <tr>
-                    <th>Nni</th>
-                    <td>{{ user.nni }}</td>
-                </tr>
-                <tr>
-                    <th>Roles</th>
-                    <td>
-                        {% for role in user.roles %}
-                            <span class="badge rounded-pill text-bg-primary text-white">{{ role }}</span>
-                        {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Created at</th>
-                    <td>{{ user.created_at|date('d-m-Y') }}</td>
-                </tr>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Informations personnelles</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Id :</strong></div>
+                    <div class="col-md-8">{{ user.id }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Prénom :</strong></div>
+                    <div class="col-md-8">{{ user.firstname }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Nom :</strong></div>
+                    <div class="col-md-8">{{ user.lastname }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>NNI :</strong></div>
+                    <div class="col-md-8">{{ user.nni }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Email :</strong></div>
+                    <div class="col-md-8">{{ user.email }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Date de création :</strong></div>
+                    <div class="col-md-8">{{ user.created_at|date('d-m-Y') }}</div>
+                </div>
                 {% if user.updated_at %}
-                    <tr>
-                        <th>Updated at</th>
-                        <td class="capitalize">{{ user.updated_at|format_datetime('full', 'short') }}
-                    </tr>
+                    <div class="row mb-2">
+                        <div class="col-md-4"><strong>Dernière mise à jour :</strong></div>
+                        <div class="col-md-8">{{ user.updated_at|format_datetime('full', 'short') }}</div>
+                    </div>
                 {% endif %}
-                <tr>
-                    <th>Email</th>
-                    <td>{{ user.email }}</td>
-                </tr>
-            </tbody>
-        </table>
+            </div>
+        </div>
 
-        <a href="{{ path('user_index') }}">back to list</a>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Rôles et autorisations</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-md-4"><strong>Rôles :</strong></div>
+                    <div class="col-md-8">
+                        {% for role in user.roles %}
+                            <span class="badge rounded-pill bg-primary">{{ role }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        {#<a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>#}
-        <a href="#"
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ path('user_index') }}" class="btn btn-blue">
+                <i class="bi bi-arrow-left"></i> Retour à la liste
+            </a>
+            <div class="d-flex">
+                <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-primary text-white me-2">
+                    <i class="bi bi-pencil"></i> Modifier
+                </a>
+                {{ include('user/_delete_form.html.twig', {'label': 'Supprimer', 'icon': 'bi bi-trash'}) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+
+        {#<a href="#"
            data-bs-toggle="modal"
            data-bs-target="#modalCreateUser"
            data-modal-title="Edition d'un utilisateur"
            data-user-data="{{ user.id }}">
             edit
-        </a>
-
-
-        {{ include('user/_delete_form.html.twig') }}
-    </main>
-{% endblock %}
+        </a>#}
