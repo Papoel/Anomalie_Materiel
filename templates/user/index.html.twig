@@ -36,25 +36,32 @@
                         <td>{{ user.lastname }}</td>
                         <td>{{ user.nni }}</td>
                         <td>
-                            {% if user.roles[0] is same as 'ROLE_ADMIN' %}
-                                {% set roleLabel = 'Administrateur' %}
-                                {% set badgeColor = 'bg-danger' %}
-                            {% elseif user.roles[0] is same as 'ROLE_CHARGE_AFFAIRES' %}
-                                {% set roleLabel = 'Chargé d\'affaires' %}
-                                {% set badgeColor = 'bg-success' %}
-                            {% elseif user.roles[0] is same as 'ROLE_METHODE' %}
-                                {% set roleLabel = 'Méthode' %}
-                                {% set badgeColor = 'bg-warning text-dark' %}
-                            {% else %}
-                                {% set roleLabel = 'Utilisateur' %}
-                                {% set badgeColor = 'bg-blue' %}
-                            {% endif %}
-                            <span class="badge rounded-pill {{ badgeColor }} px-3 py-2 fw-lighter">{{ roleLabel }}</span>
+                            {% for role in user.roles %}
+                                {% set badgeColor =
+                                    role == 'ROLE_ADMIN' ? 'bg-danger' :
+                                    role == 'ROLE_USER' ? 'bg-blue' :
+                                    role == 'ROLE_METHODE' ? 'bg-warning text-dark' :
+                                    role == 'ROLE_CHARGE_AFFAIRES' ? 'bg-success' : 'bg-secondary'
+                                %}
+                                {% set roleLabel =
+                                    role == 'ROLE_ADMIN' ? 'Administrateur' :
+                                    role == 'ROLE_USER' ? 'Utilisateur' :
+                                    role == 'ROLE_METHODE' ? 'Méthode' :
+                                    role == 'ROLE_CHARGE_AFFAIRES' ? 'Chargé d\'affaires' : 'Inconnu'
+                                %}
+                                <span class="badge rounded-pill {{ badgeColor }} px-3 py-2 fw-lighter" style="font-size: small;">{{ roleLabel }}</span>
+                            {% endfor %}
                         </td>
+
+                        {#                            <span class="badge rounded-pill {{ badgeColor }} px-3 py-2 fw-lighter">{{ role }}</span>#}
                         <td>{{ user.email }}</td>
                         <td>
-                            <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
-                            <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-secondary" data-bs-target="#modalCreateUser" data-bs-toggle="modal">Modifier</a>
+                            <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i> Voir
+                            </a>
+                            <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-secondary me-2">
+                                <i class="bi bi-pencil"></i> Modifier
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -65,6 +72,6 @@
             <div class="alert alert-info">Aucun utilisateur n'a été trouvé</div>
         {% endif %}
 
-        <a href="#" class="btn btn-primary mt-3 text-light" data-bs-target="#modalCreateUser" data-bs-toggle="modal">Créer un utilisateur</a>
+        <a href="#" class="btn btn-sm btn-primary mt-3 text-light" data-bs-target="#modalCreateUser" data-bs-toggle="modal">Créer un utilisateur</a>
     </section>
 {% endblock %}

@@ -5,13 +5,17 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
+use App\Service\User\UserPasswordHasherService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/user', name: 'user_')]
+#[isGranted('ROLE_ADMIN')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'index', methods: [Request::METHOD_GET])]
@@ -31,14 +35,26 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(
+        Request $request,
+        User $user,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherService $userPasswordHasherService): Response
     {
-        $form = $this->createForm(type: UserType::class, data: $user);
+        $form = $this->createForm(
+            type: UserType::class,
+            data: $user,
+            options: [
+                'include_password' => false, // Pour ne pas afficher les champs de mot de passe en édition
+                'include_timestamps' => true, // Pour afficher les champs de date dans le formulaire d'édition
+            ]
+        );
+
         $form->handleRequest($request);
 
+        /* TODO: FIX => Lorsque l'administrateur modifie ses propre rôles il est déconnecté */
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute(route: 'user_index', status: Response::HTTP_SEE_OTHER);
         }
 
