@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\EventSubscriber\UserTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -41,21 +40,17 @@ class UserType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add(child: 'roles', type: CollectionType::class, options: [
-                'entry_type' => ChoiceType::class,
-                'entry_options' => [
-                    'label' => false,
-                    // role by default
-                    'data' => 'ROLE_USER',
-                    'choices' => [
-                        'Utilisateur' => 'ROLE_USER',
-                        'Chargé d\'affaires' => 'ROLE_CHARGE_AFFAIRES',
-                        'Méthode' => 'ROLE_METHODE',
-                        'Administrateur' => 'ROLE_ADMIN',
-                    ],
-                ],
+            ->add(child: 'roles', type: ChoiceType::class, options: [
                 'label' => false,
-                'required' => false,
+                'choices' => [
+                    'Utilisateur' => 'ROLE_USER',
+                    'Chargé d\'Affaires' => 'ROLE_CHARGE_AFFAIRES',
+                    'Méthode' => 'ROLE_METHODE',
+                    'Administrateur' => 'ROLE_ADMIN',
+                ],
+                'multiple' => true,
+                'expanded' => true,
+                'required' => true,
             ])
             ->add(child: 'password', type: RepeatedType::class, options: [
                 'type' => PasswordType::class,

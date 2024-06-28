@@ -19,11 +19,17 @@ readonly class UserTypeSubscriber implements EventSubscriberInterface
             return;
         }
 
+        // Filtre les rôles pour éliminer les valeurs nulles ou vides
+        $roles = array_filter($data->getRoles(), function ($role) {
+            return null !== $role && '' !== $role;
+        });
+
         // Vérifie si un rôle a été sélectionné ou si ROLE_USER est déjà présent
-        $roles = $data->getRoles();
         if (empty($roles)) {
-            $data->setRoles(['ROLE_USER']);
+            $roles[] = 'ROLE_USER';
         }
+
+        $data->setRoles($roles);
     }
 
     public static function getSubscribedEvents(): array
