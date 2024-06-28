@@ -139,13 +139,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     }
 
     /**
-     * @return array|string[]|null[]
+     * @return array|string[]
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = null;
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
