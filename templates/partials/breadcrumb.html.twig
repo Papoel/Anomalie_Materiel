@@ -1,0 +1,15 @@
+<section id="breadcrumb" class="bg-light border-bottom border-1 border-opacity-25 border-primary mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-3 rounded">
+            {% for crumb in breadcrumbs %}
+                {% if not loop.last %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ crumb.url }}" class="text-dark text-decoration-none">{{ crumb.label }}</a>
+                    </li>
+                {% else %}
+                    <li class="breadcrumb-item active" aria-current="page">{{ crumb.label }}</li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </nav>
+</section>
