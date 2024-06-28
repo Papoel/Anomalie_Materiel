@@ -190,11 +190,7 @@ body {
     color: var(--bs-primary);
 }
 
-.navbar .dropdown-toggle::after {
-    border: none;
-    content: "\f107";
-    font-family: "Font Awesome 6 Free", serif;
-    font-weight: 700;
+.navbar .dropdown-toggle .bi-chevron-down {
     vertical-align: middle;
     margin-left: 8px;
 }
@@ -207,7 +203,7 @@ body {
         font-weight: 400;
         font-family: 'Hind', sans-serif;
         transform: rotateX(-75deg);
-        transform-origin: 0% 0%;
+        transform-origin: 0;
         border: 0;
         transition: .5s;
         opacity: 0;
@@ -215,9 +211,10 @@ body {
 }
 
 .dropdown .dropdown-menu a:hover {
-    color: #662900;
+    color: #363636;
     /*background-color: #B3E5FC;*/ /* Bleu pastel */
-    background-color: #FFE0CC;
+    background-color:rgba(0, 0, 0, 0.075);
+    letter-spacing: 1px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
