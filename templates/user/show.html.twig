@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    {% set breadcrumbs = [
+        { 'url': path('home_index'), 'label': 'Accueil' },
+        { 'url': path('user_index'), 'label': 'Utilisateurs' },
+        { 'url':  path('user_index'), 'label': 'Détails' },
+        { 'text': null, 'label': 'Données de ' ~ user.firstname ~ ' ' ~ user.lastname ~ ' (' ~ user.nni ~ ')' }
+    ] %}
+    {% include 'partials/breadcrumb.html.twig' %}
+
+    <main class="container mt-4">
+
+        <h1>Données de {{ user.firstname }} {{ user.lastname }}</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th>Firstname</th>
+                    <td>{{ user.firstname }}</td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td>{{ user.lastname }}</td>
+                </tr>
+                <tr>
+                    <th>Nni</th>
+                    <td>{{ user.nni }}</td>
+                </tr>
+                <tr>
+                    <th>Roles</th>
+                    <td>
+                        {% for role in user.roles %}
+                            <span class="badge rounded-pill text-bg-primary text-white">{{ role }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Created at</th>
+                    <td>{{ user.created_at|date('d-m-Y') }}</td>
+                </tr>
+                {% if user.updated_at %}
+                    <tr>
+                        <th>Updated at</th>
+                        <td class="capitalize">{{ user.updated_at|format_datetime('full', 'short') }}
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('user_index') }}">back to list</a>
+
+        {#<a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>#}
+        <a href="#"
+           data-bs-toggle="modal"
+           data-bs-target="#modalCreateUser"
+           data-modal-title="Edition d'un utilisateur"
+           data-user-data="{{ user.id }}">
+            edit
+        </a>
+
+
+        {{ include('user/_delete_form.html.twig') }}
+    </main>
+{% endblock %}
